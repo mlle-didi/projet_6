@@ -6,6 +6,12 @@ const express = require('express'); // Importation d'express => Framework basé 
 // On importe mongoose pour pouvoir utiliser la base de données
 const mongoose = require('mongoose'); // Plugin Mongoose pour se connecter à la data base Mongo Db
 
+// On donne accès au chemin de notre système de fichier
+const path = require('path'); // Plugin qui sert dans l'upload des images et permet de travailler avec les répertoires et chemin de fichier
+
+// Déclaration des routes
+// On importe la route dédiée aux sauces
+const saucesRoutes = require('./routes/sauces');
 // On importe la route dédiée aux utilisateurs
 const userRoutes = require('./routes/user');
 
@@ -33,6 +39,16 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
   });
+
+// Gestion de la ressource image de façon statique
+// Midleware qui permet de charger les fichiers qui sont dans le repertoire images
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+// Routes pour la gestion de toute les ressources de l'API attendues - Routage
+// Middleware qui va transmettre les requêtes vers ces url vers les routes correspondantes
+
+// Va servir les routes dédiées aux sauces
+app.use('/api/sauces', saucesRoutes);
 
 // Va servir les routes dédiées aux utilisateurs
 app.use('/api/auth', userRoutes);
