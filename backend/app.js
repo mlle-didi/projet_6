@@ -18,13 +18,12 @@ const userRoutes = require('./routes/user');
 // Connection à la base de données MongoDB avec la sécurité vers le fichier .env pour cacher le mot de passe
 // L'un des avantages que nous avons à utiliser Mongoose pour gérer notre base de données MongoDB est que nous pouvons implémenter des schémas de données stricts
 // qui permettent de rendre notre application plus robuste
-mongoose.connect(process.env.DB_URI, {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
+mongoose.connect('mongodb+srv://mlle-didi:i9L9mRmAsRfHev2G@cluster0.lfwodbx.mongodb.net/?retryWrites=true&w=majority', {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+})
+.then(() => console.log('Connexion à MongoDB réussie !'))
+.catch(() => console.log('Connexion à MongoDB échouée !'));
 
 // Création d'une application express
 const app = express(); // L'application utilise le framework express
